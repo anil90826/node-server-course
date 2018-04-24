@@ -13,7 +13,6 @@ app.set('view engine', 'hbs');
 app.use( (req, res, next) => {
     let now = new Date().toString();
     let log = `${now}: ${req.method} ${req.url}`;
-    console.log(log);
     fs.appendFile('server.log', log + '\n', (err) => {
         if(err){
             console.log('unable to append file to server.log');
@@ -42,12 +41,21 @@ app.get('/about', (req, res) => {
         pageTitle: 'About us',
     });
 });
+app.get('/projects', (req, res) => {
+    res.render('projects.hbs', {
+        pageTitle: 'Projects',
+        project_1: "Don't cry because it's over, smile because it happened.",
+        project_2: "Be yourself; everyone else is already taken.",
+        project_3: "“Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.” "
+    });
+});
 
 app.get('/bad', (req, res) => {
     res.send({
         Error: "Something went wrong "
     });
 });
+
 
 app.listen(port, () => {
     console.log(`Server is up and running on port:${port}`);
